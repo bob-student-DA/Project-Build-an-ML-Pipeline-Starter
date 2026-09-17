@@ -13,6 +13,20 @@ logger = logging.getLogger()
 
 # DO NOT MODIFY
 def go(args):
+    """
+    Download the raw data artifact from W&B, remove rows with prices outside the valid range,
+    filter out points outside NYC's geographic boundaries, convert last_review to a proper datetime
+    type, and upload the cleaned result as a new W&B artifact.
+
+    Args:
+     args: argparse.Namespace containing:
+        input_artifact (str): name/version of the raw input artifact to clean
+        output_artifact (str): name to give the cleaned output artifact
+            output_type (str): W&B artifact type for the output
+            output_description (str): description for the output artifact
+            min_price (float): minimum valid price; rows below this are dropped
+            max_price (float): maximum valid price; rows above this are dropped
+    """
 
     run = wandb.init(job_type="basic_cleaning")
     run.config.update(args)
